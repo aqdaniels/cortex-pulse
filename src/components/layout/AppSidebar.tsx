@@ -5,9 +5,11 @@ import {
   BarChart, 
   Code, 
   CpuIcon, 
+  Gauge,
   GitBranch, 
   Home, 
   LayoutDashboard, 
+  Layers,
   Settings, 
   Users 
 } from "lucide-react";
@@ -45,7 +47,7 @@ const navItems = [
   { 
     icon: CpuIcon, 
     label: "Operations", 
-    href: "/operations", 
+    href: "/operations/modeling", 
     description: "System health and operational metrics" 
   },
   { 
@@ -116,10 +118,16 @@ export function AppSidebar() {
                     className={cn(
                       "w-full flex items-center justify-start px-3 py-2 hover:bg-sidebar-accent transition-all duration-200",
                       collapsed ? "justify-center" : "justify-start",
-                      item.href === "/" && "bg-sidebar-accent text-cortex-primary"
+                      (item.href === "/" && window.location.pathname === "/") || 
+                      (item.href !== "/" && window.location.pathname.startsWith(item.href)) 
+                        ? "bg-sidebar-accent text-cortex-primary" : ""
                     )}
                     onClick={() => {
-                      if (item.href !== "/" && item.href !== "/dashboard") {
+                      if (
+                        item.href !== "/" && 
+                        item.href !== "/dashboard" && 
+                        item.href !== "/operations/modeling"
+                      ) {
                         toast({
                           title: "Coming Soon",
                           description: `The ${item.label} section is under development`,
@@ -128,7 +136,12 @@ export function AppSidebar() {
                       }
                     }}
                   >
-                    <item.icon className={cn("h-5 w-5", item.href === "/" && "text-cortex-primary")} />
+                    <item.icon className={cn(
+                      "h-5 w-5", 
+                      (item.href === "/" && window.location.pathname === "/") || 
+                      (item.href !== "/" && window.location.pathname.startsWith(item.href)) 
+                        ? "text-cortex-primary" : ""
+                    )} />
                     {!collapsed && <span className="ml-3">{item.label}</span>}
                   </Button>
                 </Link>
