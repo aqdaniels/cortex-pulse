@@ -11,7 +11,7 @@ import {
   Calendar, 
   Clock, 
   Download, 
-  FileChart, 
+  FileHeart, 
   Gauge, 
   Layers, 
   Play, 
@@ -100,7 +100,7 @@ const OperationsModeling = () => {
               Digital Twin Playground
             </TabsTrigger>
             <TabsTrigger value="what-if" className="flex items-center">
-              <FileChart className="mr-2 h-4 w-4" />
+              <FileHeart className="mr-2 h-4 w-4" />
               What-If Analysis
             </TabsTrigger>
             <TabsTrigger value="results" className="flex items-center">

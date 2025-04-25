@@ -87,13 +87,12 @@ export function DeploymentSuccess() {
         </div>
         <Progress 
           value={progress} 
-          className="h-3 bg-gray-200"
-          indicatorClassName={
+          className={
             progress >= 95 
-              ? "bg-green-500" 
+              ? "h-3 bg-gray-200" 
               : progress >= 85 
-                ? "bg-yellow-500"
-                : "bg-red-500"
+                ? "h-3 bg-gray-200"
+                : "h-3 bg-gray-200"
           }
         />
         <div className="text-xs text-muted-foreground">

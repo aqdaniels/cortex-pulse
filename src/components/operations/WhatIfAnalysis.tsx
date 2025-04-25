@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BarChart, FileChart, Layers, Plus, TrendingDown, TrendingUp } from "lucide-react";
+import { BarChart, FileHeart, Layers, Plus, TrendingDown, TrendingUp } from "lucide-react";
 
 export function WhatIfAnalysis() {
   const [activeScenario, setActiveScenario] = useState("baseline");
@@ -103,7 +103,7 @@ export function WhatIfAnalysis() {
               </div>
               <div className="flex space-x-2">
                 <Button variant="outline" size="sm">
-                  <FileChart className="h-4 w-4 mr-2" />
+                  <FileHeart className="h-4 w-4 mr-2" />
                   Detailed Report
                 </Button>
                 <Button size="sm">
