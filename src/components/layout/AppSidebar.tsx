@@ -11,7 +11,9 @@ import {
   LayoutDashboard, 
   Layers,
   Settings, 
-  Users 
+  Users,
+  FileCode,
+  TrendingUp
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -19,6 +21,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 
+// Main navigation items
 const navItems = [
   { 
     icon: Home, 
@@ -36,31 +39,96 @@ const navItems = [
     icon: Code, 
     label: "Development", 
     href: "/development", 
-    description: "Code metrics and development insights" 
+    description: "Code metrics and development insights",
+    subItems: [
+      { 
+        label: "Code Quality", 
+        href: "/development/code-quality",
+        description: "Track and improve code maintainability"
+      },
+      { 
+        label: "Technical Debt", 
+        href: "/development/tech-debt",
+        description: "Monitor and manage technical debt"
+      },
+      { 
+        label: "Codebase Health", 
+        href: "/development/codebase-health",
+        description: "Overall health metrics for your codebase"
+      }
+    ]
   },
   { 
     icon: GitBranch, 
     label: "CI/CD", 
     href: "/cicd", 
-    description: "Pipeline performance and deployment metrics" 
+    description: "Pipeline performance and deployment metrics",
+    subItems: [
+      { 
+        label: "Build Performance", 
+        href: "/cicd/build-performance",
+        description: "Analyze build times and success rates"
+      },
+      { 
+        label: "Deployment Analytics", 
+        href: "/cicd/deployment-analytics",
+        description: "Track deployment frequency and stability"
+      }
+    ]
   },
   { 
     icon: CpuIcon, 
     label: "Operations", 
     href: "/operations/modeling", 
-    description: "System health and operational metrics" 
+    description: "System health and operational metrics",
+    subItems: [
+      {
+        label: "Service Modeling", 
+        href: "/operations/modeling",
+        description: "Simulate operational scenarios and optimize resources"
+      },
+      {
+        label: "Dev Modeling", 
+        href: "/operations/dev-modeling",
+        description: "Model development processes and outcomes"
+      }
+    ]
   },
   { 
     icon: BarChart, 
     label: "Analytics", 
     href: "/analytics", 
-    description: "Advanced analytics and reporting" 
+    description: "Advanced analytics and reporting",
+    subItems: [
+      {
+        label: "Predictive Metrics", 
+        href: "/analytics/predictive",
+        description: "AI-powered development forecasting"
+      },
+      {
+        label: "Performance Trends", 
+        href: "/analytics/trends",
+        description: "Long-term performance analytics"
+      }
+    ]
   },
   { 
     icon: Users, 
     label: "Team", 
     href: "/team", 
-    description: "Team performance and collaboration" 
+    description: "Team performance and collaboration",
+    subItems: [
+      {
+        label: "Collaboration Insights", 
+        href: "/team/collaboration",
+        description: "Analyze team interactions and knowledge sharing"
+      },
+      {
+        label: "Developer Productivity", 
+        href: "/team/productivity",
+        description: "Individual and team performance metrics"
+      }
+    ]
   },
   { 
     icon: Settings, 
@@ -72,10 +140,23 @@ const navItems = [
 
 export function AppSidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const { toast } = useToast();
 
   const handleToggleCollapse = () => {
     setCollapsed(!collapsed);
+    if (!collapsed) {
+      // Close all expanded items when collapsing sidebar
+      setExpandedItems([]);
+    }
+  };
+
+  const toggleExpand = (label: string) => {
+    setExpandedItems(prev => 
+      prev.includes(label) 
+        ? prev.filter(item => item !== label) 
+        : [...prev, label]
+    );
   };
 
   return (
@@ -108,49 +189,139 @@ export function AppSidebar() {
       <Separator className="bg-sidebar-border" />
       
       <div className="flex-1 overflow-y-auto py-4 px-3">
-        <nav className="space-y-2">
+        <nav className="space-y-1">
           {navItems.map((item) => (
-            <Tooltip key={item.href} delayDuration={300}>
-              <TooltipTrigger asChild>
-                <Link to={item.href}>
-                  <Button
-                    variant="ghost"
-                    className={cn(
-                      "w-full flex items-center justify-start px-3 py-2 hover:bg-sidebar-accent transition-all duration-200",
-                      collapsed ? "justify-center" : "justify-start",
-                      (item.href === "/" && window.location.pathname === "/") || 
-                      (item.href !== "/" && window.location.pathname.startsWith(item.href)) 
-                        ? "bg-sidebar-accent text-cortex-primary" : ""
+            <div key={item.href} className="space-y-1">
+              <Tooltip key={item.href} delayDuration={300}>
+                <TooltipTrigger asChild>
+                  <div>
+                    <Button
+                      variant="ghost"
+                      className={cn(
+                        "w-full flex items-center justify-start px-3 py-2 hover:bg-sidebar-accent transition-all duration-200",
+                        collapsed ? "justify-center" : "justify-start",
+                        (item.href === "/" && window.location.pathname === "/") || 
+                        (item.href !== "/" && window.location.pathname.startsWith(item.href)) 
+                          ? "bg-sidebar-accent text-cortex-primary" : ""
+                      )}
+                      onClick={() => {
+                        if (item.subItems && !collapsed) {
+                          toggleExpand(item.label);
+                        } else if (
+                          item.href !== "/" && 
+                          item.href !== "/dashboard" && 
+                          item.href !== "/operations/modeling" &&
+                          item.href !== "/development" &&
+                          !item.href.startsWith("/operations")
+                        ) {
+                          toast({
+                            title: "Coming Soon",
+                            description: `The ${item.label} section is under development`,
+                            variant: "default",
+                          });
+                        }
+                      }}
+                    >
+                      <item.icon className={cn(
+                        "h-5 w-5", 
+                        (item.href === "/" && window.location.pathname === "/") || 
+                        (item.href !== "/" && window.location.pathname.startsWith(item.href)) 
+                          ? "text-cortex-primary" : ""
+                      )} />
+                      {!collapsed && (
+                        <>
+                          <span className="ml-3 flex-1 text-left">{item.label}</span>
+                          {item.subItems && (
+                            <svg 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              width="16" 
+                              height="16" 
+                              viewBox="0 0 24 24" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              strokeWidth="2" 
+                              strokeLinecap="round" 
+                              strokeLinejoin="round"
+                              className={cn(
+                                "transition-transform duration-200",
+                                expandedItems.includes(item.label) ? "rotate-180" : ""
+                              )}
+                            >
+                              <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                          )}
+                        </>
+                      )}
+                    </Button>
+                    
+                    {/* Link wrapper for main items */}
+                    {(!item.subItems || collapsed) && (
+                      <Link 
+                        to={item.href} 
+                        className="absolute inset-0" 
+                        onClick={(e) => {
+                          if (
+                            item.href !== "/" && 
+                            item.href !== "/dashboard" && 
+                            item.href !== "/operations/modeling" &&
+                            item.href !== "/development" &&
+                            !item.href.startsWith("/operations")
+                          ) {
+                            e.preventDefault();
+                          }
+                        }}
+                      />
                     )}
-                    onClick={() => {
-                      if (
-                        item.href !== "/" && 
-                        item.href !== "/dashboard" && 
-                        item.href !== "/operations/modeling"
-                      ) {
-                        toast({
-                          title: "Coming Soon",
-                          description: `The ${item.label} section is under development`,
-                          variant: "default",
-                        });
-                      }
-                    }}
-                  >
-                    <item.icon className={cn(
-                      "h-5 w-5", 
-                      (item.href === "/" && window.location.pathname === "/") || 
-                      (item.href !== "/" && window.location.pathname.startsWith(item.href)) 
-                        ? "text-cortex-primary" : ""
-                    )} />
-                    {!collapsed && <span className="ml-3">{item.label}</span>}
-                  </Button>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right" className="bg-cortex-dark text-white">
-                <p>{item.label}</p>
-                {collapsed && <p className="text-xs text-gray-300">{item.description}</p>}
-              </TooltipContent>
-            </Tooltip>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-cortex-dark text-white">
+                  <p>{item.label}</p>
+                  {collapsed && <p className="text-xs text-gray-300">{item.description}</p>}
+                </TooltipContent>
+              </Tooltip>
+              
+              {/* Subitems */}
+              {!collapsed && item.subItems && expandedItems.includes(item.label) && (
+                <div className="ml-8 space-y-1">
+                  {item.subItems.map((subItem) => (
+                    <Tooltip key={subItem.href} delayDuration={300}>
+                      <TooltipTrigger asChild>
+                        <Link to={subItem.href}>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className={cn(
+                              "w-full flex items-center justify-start px-3 py-1.5 text-sm hover:bg-sidebar-accent transition-all duration-200",
+                              window.location.pathname.startsWith(subItem.href) 
+                                ? "bg-sidebar-accent/50 text-cortex-primary" : ""
+                            )}
+                            onClick={(e) => {
+                              if (
+                                subItem.href !== "/operations/modeling" &&
+                                !subItem.href.startsWith("/development") &&
+                                !subItem.href.startsWith("/operations")
+                              ) {
+                                e.preventDefault();
+                                toast({
+                                  title: "Coming Soon",
+                                  description: `The ${subItem.label} section is under development`,
+                                  variant: "default",
+                                });
+                              }
+                            }}
+                          >
+                            <span className="flex-1 text-left">{subItem.label}</span>
+                          </Button>
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent side="right" className="bg-cortex-dark text-white">
+                        <p>{subItem.description}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </nav>
       </div>
