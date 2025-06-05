@@ -7,9 +7,12 @@ import { RiskAssessment } from "@/components/dashboard/RiskAssessment";
 import { DeploymentSuccess } from "@/components/dashboard/DeploymentSuccess";
 import { MetricsOverview } from "@/components/dashboard/MetricsOverview";
 import { TeamActivity } from "@/components/dashboard/TeamActivity";
+import { UnifiedIntelligence } from "@/components/dashboard/UnifiedIntelligence";
+import { OrganizationalKnowledge } from "@/components/dashboard/OrganizationalKnowledge";
+import { CrossPlatformIntegration } from "@/components/dashboard/CrossPlatformIntegration";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ClipboardCheck, Share, Download, Brain, Network, Shield } from "lucide-react";
+import { ClipboardCheck, Share, Download, Brain, Network, Shield, GitBranch } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
@@ -69,7 +72,7 @@ const Index = () => {
       </div>
 
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="intelligence" className="flex items-center">
             <Brain className="mr-2 h-4 w-4" />
@@ -82,6 +85,14 @@ const Index = () => {
           <TabsTrigger value="risk" className="flex items-center">
             <Shield className="mr-2 h-4 w-4" />
             Risk Assessment
+          </TabsTrigger>
+          <TabsTrigger value="unified" className="flex items-center">
+            <GitBranch className="mr-2 h-4 w-4" />
+            Unified Intelligence
+          </TabsTrigger>
+          <TabsTrigger value="knowledge" className="flex items-center">
+            <Network className="mr-2 h-4 w-4" />
+            Knowledge Base
           </TabsTrigger>
         </TabsList>
 
@@ -126,6 +137,19 @@ const Index = () => {
         <TabsContent value="risk" className="space-y-6">
           <div className="grid grid-cols-1 gap-6">
             <RiskAssessment />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="unified" className="space-y-6">
+          <div className="grid grid-cols-1 gap-6">
+            <UnifiedIntelligence />
+            <CrossPlatformIntegration />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="knowledge" className="space-y-6">
+          <div className="grid grid-cols-1 gap-6">
+            <OrganizationalKnowledge />
           </div>
         </TabsContent>
       </Tabs>

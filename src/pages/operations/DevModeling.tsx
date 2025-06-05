@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,10 @@ import {
   Share, 
   TrendingDown,
   TrendingUp,
-  Users 
+  Users, 
+  Network,
+  Brain,
+  CheckCircle
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -37,7 +39,7 @@ export default function DevModeling() {
         <div>
           <h1 className="text-3xl font-bold">Development Process Modeling</h1>
           <p className="text-muted-foreground mt-1">
-            Simulate development processes, optimize team structure, and predict delivery outcomes
+            Simulate development processes, optimize team structure, and predict delivery outcomes with Cortex intelligence integration
           </p>
         </div>
         <div className="flex items-center space-x-3">
@@ -103,6 +105,10 @@ export default function DevModeling() {
             <TabsTrigger value="forecasts" className="flex items-center">
               <BarChart className="mr-2 h-4 w-4" />
               Delivery Forecasts
+            </TabsTrigger>
+            <TabsTrigger value="cortex-integration" className="flex items-center">
+              <Network className="mr-2 h-4 w-4" />
+              Cortex Integration
             </TabsTrigger>
           </TabsList>
 
@@ -404,6 +410,84 @@ export default function DevModeling() {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+        
+        <TabsContent value="cortex-integration" className="mt-6 space-y-4">
+          <div className="grid grid-cols-1 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Network className="mr-2 h-5 w-5" />
+                  Cortex Intelligence Integration
+                </CardTitle>
+                <CardDescription>
+                  Real-time operational insights integrated with development modeling
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <h3 className="font-medium">Operations Impact on Development</h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                        <span className="text-sm">Incident Response Time</span>
+                        <Badge className="bg-blue-100 text-blue-800">23min avg</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                        <span className="text-sm">System Stability</span>
+                        <Badge className="bg-green-100 text-green-800">99.7% uptime</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-amber-50 rounded-lg">
+                        <span className="text-sm">Resource Utilization</span>
+                        <Badge className="bg-amber-100 text-amber-800">73% average</Badge>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="font-medium">Development Impact on Operations</h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                        <span className="text-sm">Code Quality Score</span>
+                        <Badge className="bg-purple-100 text-purple-800">8.7/10</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                        <span className="text-sm">Test Coverage</span>
+                        <Badge className="bg-green-100 text-green-800">87%</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                        <span className="text-sm">Deployment Frequency</span>
+                        <Badge className="bg-blue-100 text-blue-800">2.3/day</Badge>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <Separator className="my-6" />
+                
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4">
+                  <h3 className="font-medium mb-3 flex items-center">
+                    <Brain className="mr-2 h-4 w-4" />
+                    Cortex Recommendations for Development
+                  </h3>
+                  <div className="space-y-2 text-sm">
+                    <p className="flex items-center">
+                      <CheckCircle className="h-4 w-4 mr-2 text-green-500" />
+                      Increase test coverage in payment module to reduce production incidents
+                    </p>
+                    <p className="flex items-center">
+                      <CheckCircle className="h-4 w-4 mr-2 text-green-500" />
+                      Implement circuit breaker pattern for external API calls
+                    </p>
+                    <p className="flex items-center">
+                      <CheckCircle className="h-4 w-4 mr-2 text-green-500" />
+                      Add monitoring for database connection pool optimization
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </AppLayout>
