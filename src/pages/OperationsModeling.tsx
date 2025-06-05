@@ -20,15 +20,20 @@ import {
   Settings, 
   Share, 
   TimerOff, 
-  Users 
+  Users,
+  DollarSign,
+  Shield,
+  Calculator
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { DigitalTwinPlayground } from "@/components/operations/DigitalTwinPlayground";
 import { ScenarioBuilder } from "@/components/operations/ScenarioBuilder";
 import { SimulationResults } from "@/components/operations/SimulationResults";
 import { WhatIfAnalysis } from "@/components/operations/WhatIfAnalysis";
+import { BusinessImpactSimulator } from "@/components/operations/BusinessImpactSimulator";
+import { ComplianceSimulator } from "@/components/operations/ComplianceSimulator";
+import { ROICalculator } from "@/components/operations/ROICalculator";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 
 const OperationsModeling = () => {
   const { toast } = useToast();
@@ -40,7 +45,7 @@ const OperationsModeling = () => {
         <div>
           <h1 className="text-3xl font-bold">Operations Modeling & Simulation</h1>
           <p className="text-muted-foreground mt-1">
-            Create scenarios, optimize resources, and predict operational outcomes
+            Create scenarios, optimize resources, and predict operational outcomes with business impact analysis
           </p>
         </div>
         <div className="flex items-center space-x-3">
@@ -97,15 +102,27 @@ const OperationsModeling = () => {
             </TabsTrigger>
             <TabsTrigger value="digital-twin" className="flex items-center">
               <Gauge className="mr-2 h-4 w-4" />
-              Digital Twin Playground
+              Digital Twin
             </TabsTrigger>
             <TabsTrigger value="what-if" className="flex items-center">
               <FileHeart className="mr-2 h-4 w-4" />
               What-If Analysis
             </TabsTrigger>
+            <TabsTrigger value="business-impact" className="flex items-center">
+              <DollarSign className="mr-2 h-4 w-4" />
+              Business Impact
+            </TabsTrigger>
+            <TabsTrigger value="compliance" className="flex items-center">
+              <Shield className="mr-2 h-4 w-4" />
+              Compliance
+            </TabsTrigger>
+            <TabsTrigger value="roi-calculator" className="flex items-center">
+              <Calculator className="mr-2 h-4 w-4" />
+              ROI Calculator
+            </TabsTrigger>
             <TabsTrigger value="results" className="flex items-center">
               <BarChart className="mr-2 h-4 w-4" />
-              Simulation Results
+              Results
             </TabsTrigger>
           </TabsList>
 
@@ -194,6 +211,18 @@ const OperationsModeling = () => {
         
         <TabsContent value="what-if" className="mt-6 space-y-4">
           <WhatIfAnalysis />
+        </TabsContent>
+        
+        <TabsContent value="business-impact" className="mt-6 space-y-4">
+          <BusinessImpactSimulator />
+        </TabsContent>
+        
+        <TabsContent value="compliance" className="mt-6 space-y-4">
+          <ComplianceSimulator />
+        </TabsContent>
+        
+        <TabsContent value="roi-calculator" className="mt-6 space-y-4">
+          <ROICalculator />
         </TabsContent>
         
         <TabsContent value="results" className="mt-6 space-y-4">
