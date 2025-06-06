@@ -2,6 +2,9 @@
 import { AppLayout } from "@/components/layout/AppLayout";
 import { DigitalTwinPulse } from "@/components/dashboard/DigitalTwinPulse";
 import { EnhancedPersonalAssistant } from "@/components/dashboard/EnhancedPersonalAssistant";
+import { AgentNetworkVisualization } from "@/components/dashboard/AgentNetworkVisualization";
+import { ConfidenceHeatmap } from "@/components/dashboard/ConfidenceHeatmap";
+import { PredictiveTimeline } from "@/components/dashboard/PredictiveTimeline";
 import { CorrelationEngine } from "@/components/dashboard/CorrelationEngine";
 import { RiskAssessment } from "@/components/dashboard/RiskAssessment";
 import { DeploymentSuccess } from "@/components/dashboard/DeploymentSuccess";
@@ -123,6 +126,15 @@ const Index = () => {
         </TabsContent>
 
         <TabsContent value="intelligence" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <AgentNetworkVisualization />
+            <PredictiveTimeline />
+          </div>
+          
+          <div className="grid grid-cols-1 gap-6 mb-6">
+            <ConfidenceHeatmap />
+          </div>
+          
           <div className="grid grid-cols-1 gap-6">
             <EnhancedPersonalAssistant />
           </div>
